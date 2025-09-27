@@ -1,0 +1,1 @@
+# This repo has been created to store all the projects of my MSc in Big Data, Data Science & Artificial Intelligence
