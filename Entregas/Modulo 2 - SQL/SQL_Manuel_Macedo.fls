@@ -1,7 +1,7 @@
-PWD c:\Users\manue\OneDrive\Documentos\Projects\MSc\Entregas
+PWD c:\Users\manue\OneDrive\Documentos\Projects\MSc\Entregas\Modulo 2 - SQL
 INPUT C:\Users\manue\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\manue\OneDrive\Documentos\Projects\MSc\Entregas\SQL.tex
-OUTPUT SQL.log
+INPUT c:\Users\manue\OneDrive\Documentos\Projects\MSc\Entregas\Modulo 2 - SQL\SQL_Manuel_Macedo.tex
+OUTPUT SQL_Manuel_Macedo.log
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
@@ -9,12 +9,12 @@ INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
-INPUT .\SQL.aux
-INPUT .\SQL.aux
-INPUT SQL.aux
-OUTPUT SQL.aux
-OUTPUT SQL.pdf
+INPUT .\SQL_Manuel_Macedo.aux
+INPUT .\SQL_Manuel_Macedo.aux
+INPUT SQL_Manuel_Macedo.aux
+OUTPUT SQL_Manuel_Macedo.aux
+OUTPUT SQL_Manuel_Macedo.pdf
 INPUT C:\Users\manue\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
-INPUT SQL.aux
+INPUT SQL_Manuel_Macedo.aux
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Users\manue\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
