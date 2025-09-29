@@ -5,8 +5,10 @@ README.md
 pics/
 
 # Ignore automatic files from Latex
+*.pdf
 *.aux
 *.fdb_latexmk
 *.fls
 *.gz
 *.log
+*.toc

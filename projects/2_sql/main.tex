@@ -1,0 +1,144 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[left=2.5cm,top=2.5cm,right=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsthm,amssymb,amsmath}
+\usepackage[spanish]{cleveref}
+\usepackage{bbm}
+\usepackage[utf8]{inputenc}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{subfig}
+\usepackage{appendix}
+\pagestyle{empty}
+\usepackage{lscape}
+
+
+
+
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parindent}{12pt}
+\begin{document}
+\begin{titlepage}
+        \centering
+        { \bfseries \Large UNIVERSIDAD COMPLUTENSE DE MADRID}
+        \vspace{0.6cm} 
+
+        {\bfseries  \Large FACULTAD DE ESTADÍSTICA} 
+        \vspace{0.6cm}
+        
+        {\includegraphics[width=0.9\textwidth]{pics/ucm_logo.png}} 
+        \vspace{0.6cm}
+        
+        {\bfseries \Large TRABAJO DE BASE DE DATOS SQL}
+        \vspace{1.75cm}
+        
+        {\bfseries \LARGE Manuel Macedo Pulido}
+        \vspace{6mm} 
+
+        {\large Máster Big Data, Ciencia de Datos e Inteligencia Artificial}
+        {\large 2025 }
+        \vspace{6mm} 
+        
+    \end{titlepage}
+
+    \newpage
+    \tableofcontents
+
+    \newpage
+    \begin{landscape}
+        \section{Diagrama Entidad-Relación}
+        {\includegraphics[width=1.4\textwidth]{pics/diagrama.png}} 
+    \end{landscape}
+
+    \newpage
+    \section{Diseño conceptual}
+    En esta sección se definen y explican las entidades del modelo 'Entidad-Relación' para el ejercicio \textit{Empresa de enventos}, 
+    así como sus relaciones y las asunciones que se han considerado para construir el modelo. 
+
+    \subsection{Entidades}
+    Entidades seleccionadas para el diseño conceptual:
+
+    \begin{itemize}
+
+        \item \textbf{Evento}\\
+            Esta entidad es el centro de todo el ejercicio, pues representa los diferentes eventos que la empresa organiza. 
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre}. \\
+                \hspace{0.5cm} -- {\bfseries Fecha}: será un TimeStamp que contenga Fecha y hora. \\
+                \hspace{0.5cm} -- {\bfseries Precio}: se asume que es fijo para cada evento, pues no se indica lo contrario en el enunciado. 
+                Además, por no complicar demasiado el problema, asumimos que cada persona solo puede comprar su propia entrada. 
+                De este modo evitamos que se produzcan las reventas de entradas masivas, como pasa hoy en día. \\
+                \hspace{0.5cm} -- {\bfseries Descripción}. \\
+            \begin{center}
+            {\includegraphics[width=0.5\textwidth]{pics/evento.png}}
+            \end{center}
+
+        \item \textbf{Actividad}\\
+            Esta entidad representa las actividades que se realizan en cada evento. 
+            Y cuenta con los siguientes atributos:\\
+                \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre de la actividad es único (e.g. A night of summer magic). \\
+                \hspace{0.5cm} -- {\bfseries Tipo}. \\
+            \begin{center}
+            {\includegraphics[width=0.3\textwidth]{pics/actividad.png}}
+            \end{center}
+
+        \item \textbf{Artista}\\
+            Esta entidad representa aquellos artistas que participan en los eventos. 
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre del artista es único (e.g. Leiva). \\
+                \hspace{0.5cm} -- {\bfseries Biografía}. \\
+            \begin{center}
+            {\includegraphics[width=0.3\textwidth]{pics/artista.png}}
+            \end{center}
+
+        \item \textbf{Persona}\\
+            La entidad persona se puede configurar de diferentes formas. En este caso, se decide seguir la siguiente lógica:
+            asumiendo que puede haber personas que tengan mismo nombre y apellidos (e.g. hermanos que se llamen igual o incluso 
+            desconocidos que se llamen exactamente igual), y considerando que en el enunciado dice "teléfonos de contacto" (por lo que puede haber más de uno),
+            asumimos que toda persona que se registre en un evento tendrá que tener un mail, que además será único. 
+            Por último, se tendrá en cuenta que el número de personas que asista a cada evento, deberá cumplir la restricción de aforo de cada evento.
+            Por lo que cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre}: para no complicar demasiado el problema, asumimos que el nombre completo se introduce en realidad en 3 campos. \\
+                \hspace{0.5cm} -- {\bfseries Apellido1}. \\
+                \hspace{0.5cm} -- {\bfseries Apellido2}. \\
+                \hspace{0.5cm} -- {\bfseries Teléfono1}. \\
+                \hspace{0.5cm} -- {\bfseries Teléfono2}. \\
+                \hspace{0.5cm} -- {\bfseries Mail}. \\
+            \begin{center}
+            {\includegraphics[width=0.75\textwidth]{pics/persona.png}}
+            \end{center}
+        
+        \item \textbf{Ubicación}\\
+            Por último, se define la entidad ubicación, que tiene algo más de detalle. El nombre de la ubicación puede no ser único, pues podemos tener el mismo
+            nombre en diferentes localidades. Es por ello que necesitamos saber de manera independiente tanto la ubicación como la localidad.
+            Además, el atributo localidad es compuesto, por lo que creará tabla. E inicialmente, podríamos pensar que sería suficiente con usar el tipo de localidad 
+            y su nombre. Sin embargo, en caso de que nos equivocásemos al introducir el valor del nombre en la tabla localidad, también tendríamos que corregirlo
+            en la tabla de la entidad ubicación. Por ello, para evitar este tipo de problemas, añadimos el atributo ID localidad, que tendrá valores únicos, 
+            y asumimos que no se cometerán fallos al añadir campos nuevos, pues será un ID numérico al uso. 
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre}. \\
+                \hspace{0.5cm} -- {\bfseries Localidad}: este a su vez tiene 3 atributos (ID Localidad, Nombre Localidad y Tipo). \\
+                \hspace{0.5cm} -- {\bfseries Dirección}: asumimos que la dirección será un único valor que contendrá toda la información necesaria,
+                referente a la localidad previamente especificada. \\
+                \hspace{0.5cm} -- {\bfseries Aforo}: este atributo será utilizado para tener en cuenta la restricción de aforo. \\
+                \hspace{0.5cm} -- {\bfseries Precio Alquiler}. \\
+                \hspace{0.5cm} -- {\bfseries Característica}. \\
+            \begin{center}
+            {\includegraphics[width=0.75\textwidth]{pics/ubicacion.png}}
+            \end{center}
+
+    
+    \end{itemize}
+
+
+
+
+\end{document}
