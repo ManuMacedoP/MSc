@@ -17,7 +17,6 @@
 \usepackage{algpseudocode}
 \usepackage{subfig}
 \usepackage{appendix}
-\pagestyle{empty}
 \usepackage{lscape}
 
 
@@ -45,9 +44,14 @@
 
         {\large Máster Big Data, Ciencia de Datos e Inteligencia Artificial}
         {\large 2025 }
-        \vspace{6mm} 
+        \vspace{6mm}
+
+        \thispagestyle{empty}
         
     \end{titlepage}
+
+    \pagenumbering{arabic} 
+    \setcounter{page}{1}
 
     \newpage
     \tableofcontents
@@ -67,7 +71,6 @@
     Entidades seleccionadas para el diseño conceptual:
 
     \begin{itemize}
-
         \item \textbf{Evento}\\
             Esta entidad es el centro de todo el ejercicio, pues representa los diferentes eventos que la empresa organiza. 
             Y cuenta con los siguientes atributos: \\
@@ -76,7 +79,7 @@
                 \hspace{0.5cm} -- {\bfseries Precio}: se asume que es fijo para cada evento, pues no se indica lo contrario en el enunciado. 
                 Además, por no complicar demasiado el problema, asumimos que cada persona solo puede comprar su propia entrada. 
                 De este modo evitamos que se produzcan las reventas de entradas masivas, como pasa hoy en día. \\
-                \hspace{0.5cm} -- {\bfseries Descripción}. \\
+                \hspace{0.5cm} -- {\bfseries Descripción}.
             \begin{center}
             {\includegraphics[width=0.5\textwidth]{pics/evento.png}}
             \end{center}
@@ -85,7 +88,7 @@
             Esta entidad representa las actividades que se realizan en cada evento. 
             Y cuenta con los siguientes atributos:\\
                 \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre de la actividad es único (e.g. A night of summer magic). \\
-                \hspace{0.5cm} -- {\bfseries Tipo}. \\
+                \hspace{0.5cm} -- {\bfseries Tipo}.
             \begin{center}
             {\includegraphics[width=0.3\textwidth]{pics/actividad.png}}
             \end{center}
@@ -94,7 +97,7 @@
             Esta entidad representa aquellos artistas que participan en los eventos. 
             Y cuenta con los siguientes atributos: \\
                 \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre del artista es único (e.g. Leiva). \\
-                \hspace{0.5cm} -- {\bfseries Biografía}. \\
+                \hspace{0.5cm} -- {\bfseries Biografía}.
             \begin{center}
             {\includegraphics[width=0.3\textwidth]{pics/artista.png}}
             \end{center}
@@ -111,7 +114,7 @@
                 \hspace{0.5cm} -- {\bfseries Apellido2}. \\
                 \hspace{0.5cm} -- {\bfseries Teléfono1}. \\
                 \hspace{0.5cm} -- {\bfseries Teléfono2}. \\
-                \hspace{0.5cm} -- {\bfseries Mail}. \\
+                \hspace{0.5cm} -- {\bfseries Mail}.
             \begin{center}
             {\includegraphics[width=0.75\textwidth]{pics/persona.png}}
             \end{center}
@@ -130,7 +133,7 @@
                 referente a la localidad previamente especificada. \\
                 \hspace{0.5cm} -- {\bfseries Aforo}: este atributo será utilizado para tener en cuenta la restricción de aforo. \\
                 \hspace{0.5cm} -- {\bfseries Precio Alquiler}. \\
-                \hspace{0.5cm} -- {\bfseries Característica}. \\
+                \hspace{0.5cm} -- {\bfseries Característica}.
             \begin{center}
             {\includegraphics[width=0.75\textwidth]{pics/ubicacion.png}}
             \end{center}
@@ -138,7 +141,42 @@
     
     \end{itemize}
 
+    \newpage
+    \subsection{Relaciones}
+    A continuación se explican las diferentes relaciones que tienen lugar entre las entidades:
 
+    \begin{itemize}
+        \item \textbf{Cuesta} -- Relación entre Actividad y Artista\\
+            Esta relación es de tipo N:N (por lo que creará tabla), pues varios artistas pueden participar en varias actividades. \\
+            La cardinalidad del lado Actividad → Artista es de tipo (1,N), pues el enunciado dice que 'En cada actividad participa uno o varios artistas". \\
+            Y la cardinalidad del lado Artista → Actividad es de tipo (1,N), pues el enunciado dice 'de los artistas que los protagonizan', por lo que asumimos
+            que solo se registran artistas que van a participar en actividades (y no artistas que no participan en actividades, lo que daría una cardinalidad
+            de tipo (0,N)). \\
+            Además, tiene el atributo de relación 'dinero', pues entendemos que cada artista tiene un coste diferente para cada actividad.
+        
+        \item \textbf{Se Realiza} -- Relación entre Evento y Actividad\\
+            Esta relación es de tipo 1:1, pues el enunciado dice que 'En un evento solo se realiza una actividad'. Esto implica que las cardinalidades
+            de ambos lados sean de tipo (1,1).
 
+        \item \textbf{Asiste} -- Relación entre Evento y Persona\\
+            Esta relación es de tipo N:N (por lo que creará tabla), pues varias personas pueden asistir a varios eventos. \\
+            La cardinalidad del lado Evento → Persona es de tipo (0,N), pues el enunciado no dice explícitamene que a cada evento tengan que asistir al menos
+            una persona. \\
+            Y la cardinalidad del lado Persona → Evento es de tipo (1,N), pues el enunciado dice 'tendremos en cuenta los asistentes a los eventos', 
+            por lo que asumimos que solo se registran personas que van a asistir a eventos (y no personas que no asisten a eventos, lo que daría una cardinalidad
+            de tipo (0,N)). \\
+            Además, tiene el atributo de relación 'valoración', ya que la valoración de cada persona a cada evento es independiente.
+                
+        \item \textbf{Tiene} -- Relación entre Evento y Ubicación\\
+            Esta relación es de tipo 1:N, asumiendo que cada evento esté solo en 1 ubicación (e.g. no hay eventos en el medio de 2 ubicaciones)
+            y asumiendo que una ubicación pueded tener más de 1 evento. \\
+            La cardinalidad del lado Evento → Ubicación es de tipo (1,1), pues asumimos que cada evento tiene 1 ubicación, y que es única. \\
+            Y la cardinalidad del lado Ubicación → Evento es de tipo (1,N), ya que según el enunciado, asumimos que solo se registran ubicaciones asociadas 
+            a eventos (en caso contrario la cardinalidad sería de tipo (0,N)) y que varios eventos pueden tener lugar en una misma ubicación.
+
+    \end{itemize}
+
+    \newpage
+    \subsection{Paso a tabla}
 
 \end{document}
