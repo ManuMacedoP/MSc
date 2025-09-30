@@ -26,28 +26,26 @@
 \setlength{\parindent}{12pt}
 \begin{document}
 \begin{titlepage}
-        \centering
-        { \bfseries \Large UNIVERSIDAD COMPLUTENSE DE MADRID}
-        \vspace{0.6cm} 
 
-        {\bfseries  \Large FACULTAD DE ESTADÍSTICA} 
-        \vspace{0.6cm}
+        \centering
+        {\bfseries \ }
+        \vspace{2cm}
         
         {\includegraphics[width=0.9\textwidth]{pics/ucm_logo.png}} 
         \vspace{0.6cm}
         
-        {\bfseries \Large TRABAJO DE BASE DE DATOS SQL}
+        {\bfseries \Large TRABAJO DE BASES DE DATOS SQL}
         \vspace{1.75cm}
         
         {\bfseries \LARGE Manuel Macedo Pulido}
         \vspace{6mm} 
 
-        {\large Máster Big Data, Ciencia de Datos e Inteligencia Artificial}
+        {\large Máster Big Data, Data Science e Inteligencia Artificial}
         {\large 2025 }
         \vspace{6mm}
 
         \thispagestyle{empty}
-        
+
     \end{titlepage}
 
     \pagenumbering{arabic} 
@@ -58,8 +56,10 @@
 
     \newpage
     \begin{landscape}
+
         \section{Diagrama Entidad-Relación}
         {\includegraphics[width=1.4\textwidth]{pics/diagrama.png}} 
+
     \end{landscape}
 
     \newpage
@@ -71,10 +71,11 @@
     Entidades seleccionadas para el diseño conceptual:
 
     \begin{itemize}
+
         \item \textbf{Evento}\\
-            Esta entidad es el centro de todo el ejercicio, pues representa los diferentes eventos que la empresa organiza. 
+            Esta entidad es el centro de todo el ejercicio, pues representa los diferentes eventos que la empresa organiza.
             Y cuenta con los siguientes atributos: \\
-                \hspace{0.5cm} -- {\bfseries Nombre}. \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ev}. \\
                 \hspace{0.5cm} -- {\bfseries Fecha}: será un TimeStamp que contenga Fecha y hora. \\
                 \hspace{0.5cm} -- {\bfseries Precio}: se asume que es fijo para cada evento, pues no se indica lo contrario en el enunciado. 
                 Además, por no complicar demasiado el problema, asumimos que cada persona solo puede comprar su propia entrada. 
@@ -87,7 +88,7 @@
         \item \textbf{Actividad}\\
             Esta entidad representa las actividades que se realizan en cada evento. 
             Y cuenta con los siguientes atributos:\\
-                \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre de la actividad es único (e.g. A night of summer magic). \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ac}: se asume que el nombre de la actividad es único (e.g. A night of summer magic). \\
                 \hspace{0.5cm} -- {\bfseries Tipo}.
             \begin{center}
             {\includegraphics[width=0.3\textwidth]{pics/actividad.png}}
@@ -96,7 +97,7 @@
         \item \textbf{Artista}\\
             Esta entidad representa aquellos artistas que participan en los eventos. 
             Y cuenta con los siguientes atributos: \\
-                \hspace{0.5cm} -- {\bfseries Nombre}: se asume que el nombre del artista es único (e.g. Leiva). \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ar}: se asume que el nombre del artista es único (e.g. Leiva). \\
                 \hspace{0.5cm} -- {\bfseries Biografía}.
             \begin{center}
             {\includegraphics[width=0.3\textwidth]{pics/artista.png}}
@@ -109,7 +110,7 @@
             asumimos que toda persona que se registre en un evento tendrá que tener un mail, que además será único. 
             Por último, se tendrá en cuenta que el número de personas que asista a cada evento, deberá cumplir la restricción de aforo de cada evento.
             Por lo que cuenta con los siguientes atributos: \\
-                \hspace{0.5cm} -- {\bfseries Nombre}: para no complicar demasiado el problema, asumimos que el nombre completo se introduce en realidad en 3 campos. \\
+                \hspace{0.5cm} -- {\bfseries Nombre Pe}: para no complicar demasiado el problema, asumimos que el nombre completo se introduce en realidad en 3 campos. \\
                 \hspace{0.5cm} -- {\bfseries Apellido1}. \\
                 \hspace{0.5cm} -- {\bfseries Apellido2}. \\
                 \hspace{0.5cm} -- {\bfseries Teléfono1}. \\
@@ -127,7 +128,7 @@
             en la tabla de la entidad ubicación. Por ello, para evitar este tipo de problemas, añadimos el atributo ID localidad, que tendrá valores únicos, 
             y asumimos que no se cometerán fallos al añadir campos nuevos, pues será un ID numérico al uso. 
             Y cuenta con los siguientes atributos: \\
-                \hspace{0.5cm} -- {\bfseries Nombre}. \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ub}. \\
                 \hspace{0.5cm} -- {\bfseries Localidad}: este a su vez tiene 3 atributos (ID Localidad, Nombre Localidad y Tipo). \\
                 \hspace{0.5cm} -- {\bfseries Dirección}: asumimos que la dirección será un único valor que contendrá toda la información necesaria,
                 referente a la localidad previamente especificada. \\
@@ -138,7 +139,6 @@
             {\includegraphics[width=0.75\textwidth]{pics/ubicacion.png}}
             \end{center}
 
-    
     \end{itemize}
 
     \newpage
@@ -146,6 +146,7 @@
     A continuación se explican las diferentes relaciones que tienen lugar entre las entidades:
 
     \begin{itemize}
+
         \item \textbf{Cuesta} -- Relación entre Actividad y Artista\\
             Esta relación es de tipo N:N (por lo que creará tabla), pues varios artistas pueden participar en varias actividades. \\
             La cardinalidad del lado Actividad → Artista es de tipo (1,N), pues el enunciado dice que 'En cada actividad participa uno o varios artistas". \\
@@ -178,5 +179,52 @@
 
     \newpage
     \subsection{Paso a tabla}
+    A continuación se detallan las diferentes tablas que se van a necesitar para representar el diagrama anteriormente descrito, así como las principales columnas 
+    (Primary Key (PK), Foreign Key (FK) y Relation Attribute):
+
+    \begin{itemize}
+
+        \item \textbf{Tabla de la entidad 'Actividad'} \\
+            -- PK: Nombre Ac.
+        
+        \item \textbf{Tabla de la entidad 'Artista'} \\
+            -- PK: Nombre Ar.
+            
+        \item \textbf{Tabla de la entidad 'Evento'} \\
+            -- PK (compuesta): Nombre Ev, Fecha (ya que asumimos que un mismo evento se puede realizar en diferentes fechas). \\
+            -- FK: Nombre Ac (como Evento y Actividad tienen relación 1:1, una de las dos entidades aboserbe como FK, la PK 
+                de la otra, y como evento es la entidad principal del ejercicio, tiene más sentido que sea este el que la absorba). \\
+            -- FK (compuesta): Nombre Ub, ID Localidad (para que apunte a una Candidate Key (CK) única).
+            
+        \item \textbf{Tabla de la entidad 'Persona'} \\
+            -- PK: Mail.
+            
+        \item \textbf{Tabla de la entidad 'Ubicación'} \\
+            -- PK: (compuesta): Nombre Ub, ID Localidad (ya que como se indicó previamente, para que la ubicación sea única, se necesita su nombre y 
+            el ID de la localidad donde se encuentra). \\
+            -- FK: ID Localidad (ya que con la PK se identifica unívocamente la ubicación, pero además se necesita saber cual es el id de la localidad 
+            para garantizar que ese id exista en la tabla localidad).
+            
+        \item \textbf{Tabla de la relación 'Cuesta'} \\
+            -- PK (compuesta): Nombre Ac, Nombre Ar (ya que la relación 'Cuesta' es de tipo N:N, entonces su PK está formada por las dos PK de las 
+            entidades que relaciona). \\
+            -- FK: Nombre Ac (para asegurar que toda fila de 'Cuesta' apunte a una actividad existente). \\
+            -- FK: Nombre Ar (para asegurar que toda fila de 'Cuesta' apunte a un artista existente). \\
+            -- Relation Attribute: Dinero.
+            
+        \item \textbf{Tabla de la relación 'Asiste'} \\
+            -- PK (compuesta): Nombre Ev, Nombre Pe (ya que la relación 'Asiste' es de tipo N:N, entonces su PK está formada por las dos PK de las 
+            entidades que relaciona). \\
+            -- FK: Nombre Ev (para asegurar que toda fila de 'Asiste' apunte a un evento existente). \\
+            -- FK: Nombre Pe (para asegurar que toda fila de 'Asiste' apunte a una persona existente). \\
+            -- Relation Attribute: Valoración.
+            
+        \item \textbf{Tabla del atributo compuesto 'Localidad'} \\
+            -- PK: ID Localidad.
+
+    \end{itemize}
+
+    \newpage
+    \section{Implementación}
 
 \end{document}
