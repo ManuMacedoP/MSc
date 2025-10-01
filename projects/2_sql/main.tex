@@ -1,0 +1,247 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[left=2.5cm,top=2.5cm,right=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsthm,amssymb,amsmath}
+\usepackage[spanish]{cleveref}
+\usepackage{bbm}
+\usepackage[utf8]{inputenc}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{subfig}
+\usepackage{appendix}
+\usepackage{lscape}
+
+
+
+
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parindent}{12pt}
+\begin{document}
+\begin{titlepage}
+
+        \centering
+        {\bfseries \ }
+        \vspace{2cm}
+        
+        {\includegraphics[width=0.9\textwidth]{pics/ucm_logo.png}} 
+        \vspace{0.6cm}
+        
+        {\bfseries \Large TRABAJO DE BASES DE DATOS SQL}
+        \vspace{1.75cm}
+        
+        {\bfseries \LARGE Manuel Macedo Pulido}
+        \vspace{6mm} 
+
+        {\large Máster Big Data, Data Science e Inteligencia Artificial}
+        {\large 2025 }
+        \vspace{6mm}
+
+        \thispagestyle{empty}
+
+    \end{titlepage}
+
+    \pagenumbering{arabic} 
+    \setcounter{page}{1}
+
+    \newpage
+    \tableofcontents
+
+    \newpage
+    \begin{landscape}
+
+        \section{Diagrama Entidad-Relación}
+        {\includegraphics[width=1.4\textwidth]{pics/diagrama.png}} 
+
+    \end{landscape}
+
+    \newpage
+    \section{Diseño conceptual}
+    En esta sección se definen y explican las entidades del modelo 'Entidad-Relación' para el ejercicio \textit{Empresa de eventos}, 
+    así como sus relaciones y las asunciones que se han considerado para construir el modelo. 
+
+    \subsection{Entidades}
+    Entidades seleccionadas para el diseño conceptual:
+
+    \begin{itemize}
+
+        \item \textbf{Evento}\\
+            Esta entidad es el centro de todo el ejercicio, pues representa los diferentes eventos que la empresa organiza.
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ev}. \\
+                \hspace{0.5cm} -- {\bfseries Fecha}: será un datetime (e.g. 1999-09-26 14:30:45). \\
+                \hspace{0.5cm} -- {\bfseries Precio}: se asume que es fijo para cada evento, pues no se indica lo contrario en el enunciado. 
+                Además, por no complicar demasiado el problema, asumimos que cada persona solo puede comprar su propia entrada (de este modo evitamos 
+                que se produzcan las reventas de entradas masivas, como pasa hoy en día), que no hay reembolsos y que no se almacenan datos de las compras de 
+                las entradas, de modo que las ganancias de cada evento se podrán calcular mediante la fórmula 
+                'ganancia = (número de asistentes * precio entrada) - (suma de cachés + precio alquiler)', asumiendo que todo asistente debe pagar la entrada 
+                para acceder al concierto. \\
+                \hspace{0.5cm} -- {\bfseries Descripción}.
+
+        \item \textbf{Actividad}\\
+            Esta entidad representa las actividades que se realizan en cada evento. 
+            Y cuenta con los siguientes atributos:\\
+                \hspace{0.5cm} -- {\bfseries Nombre Ac}: se asume que el nombre de la actividad es único (e.g. A night of summer magic) para cada actividad. \\
+                \hspace{0.5cm} -- {\bfseries Tipo Ac}: por simplicidad, únicamente podrá tener los valores especificados en el enunciado (conciertos de música, 
+                exposiciones, obras de teatro y conferencias) y no se considerarán los géneros de los conciertos de música.
+
+        \item \textbf{Artista}\\
+            Esta entidad representa aquellos artistas que participan en los eventos. 
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ar}: se asume que el nombre del artista es único (e.g. Leiva). \\
+                \hspace{0.5cm} -- {\bfseries Biografía}.
+
+        \item \textbf{Persona}\\
+            La entidad persona se puede configurar de diferentes formas. En este caso, se decide seguir la siguiente lógica:
+            asumiendo que puede haber personas que tengan mismo nombre y apellidos (e.g. hermanos que se llamen igual o incluso 
+            desconocidos que se llamen exactamente igual), y considerando que en el enunciado dice "teléfonos de contacto" (asumimos que como máximo se 
+            aceptan dos, pues habitualmente suele ser el teléfono móvil y el fijo),
+            asumimos que toda persona que se registre en un evento tendrá que tener un mail, que además será único. 
+            Por último, se tendrá en cuenta que el número de personas que asista a cada evento, deberá cumplir la restricción de aforo de cada evento 
+            (número de asistentes del evento $\leq$ aforo de su ubicación).
+            Por lo que cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre Pe}: para no complicar demasiado el problema, asumimos que el nombre completo se introduce en realidad en 3 campos. \\
+                \hspace{0.5cm} -- {\bfseries Apellido1}. \\
+                \hspace{0.5cm} -- {\bfseries Apellido2}. \\
+                \hspace{0.5cm} -- {\bfseries Teléfono1}. \\
+                \hspace{0.5cm} -- {\bfseries Teléfono2}. \\
+                \hspace{0.5cm} -- {\bfseries Mail}.
+        
+        \item \textbf{Ubicación}\\
+            Por último, se define la entidad ubicación, que tiene algo más de detalle. El nombre de la ubicación puede no ser único, pues podemos tener el mismo
+            nombre en diferentes localidades. Es por ello que necesitamos saber de manera independiente tanto la ubicación como la localidad.
+            Además, el atributo localidad es compuesto, por lo que creará tabla. E inicialmente, podríamos pensar que sería suficiente con usar el tipo de localidad 
+            y su nombre. Sin embargo, en caso de que nos equivocásemos al introducir el valor del nombre en la tabla localidad, también tendríamos que corregirlo
+            en la tabla de la entidad ubicación. Por ello, para evitar este tipo de problemas, añadimos el atributo ID localidad, que tendrá valores únicos, 
+            y asumimos que no se cometerán fallos al añadir campos nuevos, pues será un ID numérico al uso. 
+            Y cuenta con los siguientes atributos: \\
+                \hspace{0.5cm} -- {\bfseries Nombre Ub}. \\
+                \hspace{0.5cm} -- {\bfseries Localidad}: este a su vez tiene 3 atributos (ID Localidad, Nombre Localidad (que únicamente contiene el 
+                topónimo) y Tipo Lo (que podrá tener únicamente el valor 'ciudad' o el valor 'pueblo')). \\
+                \hspace{0.5cm} -- {\bfseries Dirección}: asumimos que la dirección será un único valor que contendrá toda la información necesaria,
+                referente a la localidad previamente especificada. \\
+                \hspace{0.5cm} -- {\bfseries Aforo}: este atributo será utilizado para tener en cuenta la restricción de aforo. \\
+                \hspace{0.5cm} -- {\bfseries Precio Alquiler}. \\
+                \hspace{0.5cm} -- {\bfseries Características}: para no complicar demasiado el ejercicio, se asume que este atributo será una cadena de texto 
+                (también podría representarse mediante un atributo multivariado, indicado con doble círculo en el diagrama), por lo que no habrá consultas 
+                estructuradas por características.
+
+    \end{itemize}
+
+    \newpage
+    \subsection{Relaciones}
+    A continuación se explican las diferentes relaciones que tienen lugar entre las entidades:
+
+    \begin{itemize}
+
+        \item \textbf{Cuesta} -- Relación entre Actividad y Artista\\
+            Esta relación es de tipo N:N (por lo que creará tabla), pues varios artistas pueden participar en varias actividades, y a partir de ella se 
+            podrán calcular los costes totales por actividad. Además se considera que el mismo artista siempre tendrá el mismo coste para la misma actividad 
+            aunque esta tenga lugar en diferentes eventos. \\
+            La cardinalidad del lado Actividad → Artista es de tipo (1,N), pues el enunciado dice que 'En cada actividad participa uno o varios artistas". \\
+            Y la cardinalidad del lado Artista → Actividad es de tipo (1,N), pues el enunciado dice 'de los artistas que los protagonizan', por lo que asumimos
+            que solo se registran artistas que van a participar en actividades (y no artistas que no participan en actividades, lo que daría una cardinalidad
+            de tipo (0,N)). \\
+            Además, tiene el atributo de relación 'dinero', pues entendemos que cada artista tiene un coste diferente para cada actividad.
+        
+        \item \textbf{Se Realiza} -- Relación entre Evento y Actividad\\
+            Esta relación es de tipo 1:N, pues el enunciado dice que 'En un evento solo se realiza una actividad', pero no explicita que una actividad solo se 
+            realice en un evento. \\
+            La cardinalidad del lado Evento → Actividad es de tipo (1,1), pues en un evento solo puede haber una actividad. \\
+            Y la cardinalidad del lado Actividad → Evento es de tipo (1,N), una misma actividad puede realizarse en varios eventos.
+
+        \item \textbf{Asiste} -- Relación entre Evento y Persona\\
+            Esta relación es de tipo N:N (por lo que creará tabla), pues varias personas pueden asistir a varios eventos. \\
+            La cardinalidad del lado Evento → Persona es de tipo (0,N), pues el enunciado no dice explícitamene que a cada evento tengan que asistir al menos
+            una persona. \\
+            Y la cardinalidad del lado Persona → Evento es de tipo (1,N), pues el enunciado dice 'tendremos en cuenta los asistentes a los eventos', 
+            por lo que asumimos que solo se registran personas que van a asistir a eventos (y no personas que no asisten a eventos, lo que daría una cardinalidad
+            de tipo (0,N)). \\
+            Además, tiene el atributo de relación 'valoración' (se asume que solo podrán valorar aquellas personas que asisten a un evento, 
+            y se comprobará que esté entre 0 y 5 (0 $\leq$ valoración $\leq$ 5), permitiendo NULL hasta que el asistente valore), ya que la valoración 
+            de cada persona a cada evento es independiente.
+                
+        \item \textbf{Tiene} -- Relación entre Evento y Ubicación\\
+            Esta relación es de tipo 1:N, asumiendo que cada evento esté solo en 1 ubicación (e.g. no hay eventos en el medio de 2 ubicaciones)
+            y asumiendo que una ubicación puede tener más de 1 evento. \\
+            La cardinalidad del lado Evento → Ubicación es de tipo (1,1), pues asumimos que cada evento tiene 1 ubicación, y que es única. \\
+            Y la cardinalidad del lado Ubicación → Evento es de tipo (1,N), ya que según el enunciado, asumimos que solo se registran ubicaciones asociadas 
+            a eventos (en caso contrario la cardinalidad sería de tipo (0,N)) y que varios eventos pueden tener lugar en una misma ubicación.
+
+    \end{itemize}
+
+    \newpage
+    \subsection{Paso a tabla}
+    A continuación se detallan las diferentes tablas que se van a necesitar para representar el diagrama anteriormente descrito, así como las principales columnas 
+    (Primary Key (PK), Foreign Key (FK) y Relation Attribute):
+
+    \begin{itemize}
+
+        \item \textbf{Tabla de la entidad 'Actividad'} \\
+            -- PK: Nombre Ac.
+        
+        \item \textbf{Tabla de la entidad 'Artista'} \\
+            -- PK: Nombre Ar.
+            
+        \item \textbf{Tabla de la entidad 'Evento'} \\
+            -- PK (compuesta): Nombre Ev, Fecha (ya que asumimos que un mismo evento se puede realizar en diferentes fechas). \\
+            -- FK: Nombre Ac (para asegurar que toda fila de 'Evento' apunte a una actividad existente). \\
+            -- FK (compuesta): Nombre Ub, ID Localidad (para que apunte a una Candidate Key (CK) única).
+            
+        \item \textbf{Tabla de la entidad 'Persona'} \\
+            -- PK: Mail.
+            
+        \item \textbf{Tabla de la entidad 'Ubicación'} \\
+            -- PK: (compuesta): Nombre Ub, ID Localidad (ya que como se indicó previamente, para que la ubicación sea única, se necesita su nombre y 
+            el ID de la localidad donde se encuentra). \\
+            -- FK: ID Localidad (ya que con la PK se identifica unívocamente la ubicación, pero además se necesita saber cual es el id de la localidad 
+            para garantizar que ese id exista en la tabla localidad).
+            
+        \item \textbf{Tabla de la relación 'Cuesta'} \\
+            -- PK (compuesta): Nombre Ac, Nombre Ar (ya que la relación 'Cuesta' es de tipo N:N, entonces su PK está formada por las dos PK de las 
+            entidades que relaciona). \\
+            -- FK: Nombre Ac (para asegurar que toda fila de 'Cuesta' apunte a una actividad existente). \\
+            -- FK: Nombre Ar (para asegurar que toda fila de 'Cuesta' apunte a un artista existente). \\
+            -- Relation Attribute: Dinero.
+            
+        \item \textbf{Tabla de la relación 'Asiste'} \\
+            -- PK (compuesta): Nombre Ev, Fecha, Mail (ya que la relación 'Asiste' es de tipo N:N, entonces su PK está formada por las dos PK de las 
+            entidades que relaciona). \\
+            -- FK (compuesta): Nombre Ev, Fecha (para asegurar que toda fila de 'Asiste' apunte a un evento existente). \\
+            -- FK: Mail (para asegurar que toda fila de 'Asiste' apunte a una persona existente). \\
+            -- Relation Attribute: Valoración.
+            
+        \item \textbf{Tabla del atributo compuesto 'Localidad'} \\
+            -- PK: ID Localidad.
+
+    \end{itemize}
+
+    \newpage
+    \section{Implementación}
+    En esta última sección, se explica en detalle el código a utilizar para resolver el problema del enunciado.
+
+
+
+
+
+
+
+
+
+
+    Nota: tal y como se ha creado este trigger, permitiría que, si solo queda 1 hueco, y 2 personas se registran en exactamente el mismo instante, el aforo 
+    se superaría. Por tanto, para no complicar demasiado el trigger, se asume que nunca se registrarán personas en el mismo instante. 
+
+
+
+en eventos con más ceros en su valoración, salen 4 y 2 pues aunque solo hay 2 y 1 asistentes que valoran con 0 respectivamente, ambos eventos están duplicados 
+por lo que esos 3 asistentes valoran 2 veces cada uno con cero, dando lugar a 6 valoraciones con valor 0.
+
+\end{document}

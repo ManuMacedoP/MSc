@@ -1,2 +1,14 @@
 # Ignore README
 README.md
+
+# Ignore pics folder
+pics/
+
+# Ignore automatic files from Latex
+*.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.gz
+*.log
+*.toc
