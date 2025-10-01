@@ -190,19 +190,22 @@
         \item \textbf{Tabla de la entidad 'Artista'} \\
             -- PK: Nombre Ar.
             
-        \item \textbf{Tabla de la entidad 'Evento'} \\
-            -- PK (compuesta): Nombre Ev, Fecha (ya que asumimos que un mismo evento se puede realizar en diferentes fechas). \\
-            -- FK: Nombre Ac (para asegurar que toda fila de 'Evento' apunte a una actividad existente). \\
-            -- FK (compuesta): Nombre Ub, ID Localidad (para que apunte a una Candidate Key (CK) única).
-            
         \item \textbf{Tabla de la entidad 'Persona'} \\
             -- PK: Mail.
             
+        \item \textbf{Tabla del atributo compuesto 'Localidad'} \\
+            -- PK: ID Localidad.
+
         \item \textbf{Tabla de la entidad 'Ubicación'} \\
             -- PK: (compuesta): Nombre Ub, ID Localidad (ya que como se indicó previamente, para que la ubicación sea única, se necesita su nombre y 
             el ID de la localidad donde se encuentra). \\
             -- FK: ID Localidad (ya que con la PK se identifica unívocamente la ubicación, pero además se necesita saber cual es el id de la localidad 
             para garantizar que ese id exista en la tabla localidad).
+
+        \item \textbf{Tabla de la entidad 'Evento'} \\
+            -- PK (compuesta): Nombre Ev, Fecha (ya que asumimos que un mismo evento se puede realizar en diferentes fechas). \\
+            -- FK: Nombre Ac (para asegurar que toda fila de 'Evento' apunte a una actividad existente). \\
+            -- FK (compuesta): Nombre Ub, ID Localidad (para que apunte a una Candidate Key (CK) única).
             
         \item \textbf{Tabla de la relación 'Cuesta'} \\
             -- PK (compuesta): Nombre Ac, Nombre Ar (ya que la relación 'Cuesta' es de tipo N:N, entonces su PK está formada por las dos PK de las 
@@ -217,9 +220,6 @@
             -- FK (compuesta): Nombre Ev, Fecha (para asegurar que toda fila de 'Asiste' apunte a un evento existente). \\
             -- FK: Mail (para asegurar que toda fila de 'Asiste' apunte a una persona existente). \\
             -- Relation Attribute: Valoración.
-            
-        \item \textbf{Tabla del atributo compuesto 'Localidad'} \\
-            -- PK: ID Localidad.
 
     \end{itemize}
 
