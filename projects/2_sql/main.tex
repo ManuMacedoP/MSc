@@ -90,7 +90,7 @@
             Y cuenta con los siguientes atributos:\\
                 \hspace{0.5cm} -- {\bfseries Nombre Ac}: se asume que el nombre de la actividad es único (e.g. A night of summer magic) para cada actividad. \\
                 \hspace{0.5cm} -- {\bfseries Tipo Ac}: por simplicidad, únicamente podrá tener los valores especificados en el enunciado (conciertos de música, 
-                exposiciones, obras de teatro y conferencias).
+                exposiciones, obras de teatro y conferencias) y no se considerarán los géneros de los conciertos de música.
 
         \item \textbf{Artista}\\
             Esta entidad representa aquellos artistas que participan en los eventos. 
@@ -143,7 +143,8 @@
 
         \item \textbf{Cuesta} -- Relación entre Actividad y Artista\\
             Esta relación es de tipo N:N (por lo que creará tabla), pues varios artistas pueden participar en varias actividades, y a partir de ella se 
-            podrán calcular los costes totales por actividad. \\
+            podrán calcular los costes totales por actividad. Además se considera que el mismo artista siempre tendrá el mismo coste para la misma actividad 
+            aunque esta tenga lugar en diferentes eventos. \\
             La cardinalidad del lado Actividad → Artista es de tipo (1,N), pues el enunciado dice que 'En cada actividad participa uno o varios artistas". \\
             Y la cardinalidad del lado Artista → Actividad es de tipo (1,N), pues el enunciado dice 'de los artistas que los protagonizan', por lo que asumimos
             que solo se registran artistas que van a participar en actividades (y no artistas que no participan en actividades, lo que daría una cardinalidad
@@ -225,5 +226,22 @@
     \newpage
     \section{Implementación}
     En esta última sección, se explica en detalle el código a utilizar para resolver el problema del enunciado.
+
+
+
+
+
+
+
+
+
+
+    Nota: tal y como se ha creado este trigger, permitiría que, si solo queda 1 hueco, y 2 personas se registran en exactamente el mismo instante, el aforo 
+    se superaría. Por tanto, para no complicar demasiado el trigger, se asume que nunca se registrarán personas en el mismo instante. 
+
+
+
+en eventos con más ceros en su valoración, salen 4 y 2 pues aunque solo hay 2 y 1 asistentes que valoran con 0 respectivamente, ambos eventos están duplicados 
+por lo que esos 3 asistentes valoran 2 veces cada uno con cero, dando lugar a 6 valoraciones con valor 0.
 
 \end{document}
