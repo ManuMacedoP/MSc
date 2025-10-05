@@ -1,8 +1,9 @@
 # Ignore README
 README.md
 
-# Ignore pics folder
+# Ignore pics and data folders
 pics/
+data/
 
 # Ignore automatic files from Latex
 *.pdf
@@ -12,3 +13,7 @@ pics/
 *.gz
 *.log
 *.toc
+*.pyc
+
+# Ignore data
+*.csv

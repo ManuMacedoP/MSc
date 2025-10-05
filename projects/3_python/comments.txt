@@ -1,0 +1,34 @@
+Autoevaluación:
+
+01_python:
+
+1. Muestreo aleatorio: 				Completo - Nota esperada 9
+
+2. Función str2int: 				Completo - Nota esperada 8
+
+3. Función str2dt: 					Completo - Nota esperada 8
+
+4. Función str2my:					Completo - Nota esperada 8
+	Notas: La autocomprobación de str2my está mal configurada debido a typos
+	("str2dt" en vez de "str2my"; "str2ym" en vez de "str2my")
+	
+5. Función add_row:					Completo - Nota esperada 9
+
+6. Función load_employment: 		Completo - Nota esperada 8
+
+7. Función people_by_district: 		Completo - Nota esperada 8
+
+8. Función mean_age_by_district: 	Completo - Nota esperada 8
+
+9. Función year_month_data: 		Completo - Nota esperada 9
+
+10.Función sum_by_month_year: 		Completo - Nota esperada 9
+	Notas: Se entiende que en el enunciado hay un typo, pues se pide "en el resto
+	de ejercicios de numpy se debe usar un bucle (while, for), solamente funciones
+	de numpy", y se entiende que debería decri "NO se debe usar un bucle", para
+	aplicar las funciones de numpy
+
+11.Función max_requests: 			Completo - Nota esperada 8
+
+12.Función by_quarters: 			Completo - Nota esperada 8
+
