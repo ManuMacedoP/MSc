@@ -20,11 +20,15 @@ Autoevaluación:
 
 8. Función mean_age_by_district: 	Completo - Nota esperada 8
 
-9. Función xxxx: 	
+9. Función year_month_data: 		Completo - Nota esperada 9
 
-10.Función xxxx: 	
+10.Función sum_by_month_year: 		Completo - Nota esperada 9
+	Notas: Se entiende que en el enunciado hay un typo, pues se pide "en el resto
+	de ejercicios de numpy se debe usar un bucle (while, for), solamente funciones
+	de numpy", y se entiende que debería decri "NO se debe usar un bucle", para
+	aplicar las funciones de numpy
 
-11.Función xxxx: 	
+11.Función max_requests: 			Completo - Nota esperada 8
 
-12.Función xxxx: 	
+12.Función by_quarters: 			Completo - Nota esperada 8
 
