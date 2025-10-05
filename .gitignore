@@ -13,3 +13,7 @@ data/
 *.gz
 *.log
 *.toc
+*.pyc
+
+# Ignore data
+*.csv

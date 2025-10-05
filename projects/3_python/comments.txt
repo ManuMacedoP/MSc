@@ -1,0 +1,30 @@
+Autoevaluación:
+
+01_python:
+
+1. Muestreo aleatorio: 			Completo - Nota esperada 9-10
+
+2. Función str2int: 			Completo - Nota esperada 8
+
+3. Función str2dt: 				Completo - Nota esperada 8
+
+4. Función str2my:				Completo - Nota esperada 8
+	Notas: La autocomprobación de str2my está mal configurada debido a typos
+	("str2dt" en vez de "str2my"; "str2ym" en vez de "str2my")
+	
+5. Función add_row:				Completo - Nota esperada 9
+
+6. Función load_employment: 	
+
+7. Función people_by_district: 	
+
+8. Función mean_age_by_district: 	
+
+9. Función xxxx: 	
+
+10.Función xxxx: 	
+
+11.Función xxxx: 	
+
+12.Función xxxx: 	
+
